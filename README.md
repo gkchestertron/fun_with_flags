@@ -7,7 +7,7 @@ Write a simple definition and pass it into the fwf factory.
 // example-cli.js
 var Promise = require('bluebird');
 
-require('fun-with-flags')({
+require('fun_with_flags')({
     // define a top-level command
     dothething: {
         // add a description for the auto-usage message

@@ -1,14 +1,14 @@
 {
     "author": "john fellman",
     "bugs": {
-        "url": "https://github.com/north-bay/fun_with_flags/issues"
+        "url": "https://github.com/gkchestertron/fun_with_flags/issues"
     },
     "dependencies": {
         "bluebird": "3.0.1",
         "underscore": "1.8.3"
     },
     "description": "cli tool framework",
-    "homepage": "https://github.com/north-bay/fun_with_flags#readme",
+    "homepage": "https://github.com/gkchestertron/fun_with_flags#readme",
     "keywords": [
         "cli"
     ],
@@ -17,7 +17,7 @@
     "name": "fun_with_flags",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/north-bay/fun_with_flags.git"
+        "url": "git+https://github.com/gkchestertron/fun_with_flags.git"
     },
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
