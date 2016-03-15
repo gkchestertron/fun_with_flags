@@ -58,3 +58,11 @@ If you type the command:
 $ node example-cli.js
 ```
 You will get an auto-generated message indicating how to use your new cli tool.
+
+Now try:
+
+```
+$ node example-cli.js dothething rightnow 
+$ node example-cli.js dothething rightnow -f
+$ node example-cli.js dothething rightnow --error 'something bad happened'
+```
