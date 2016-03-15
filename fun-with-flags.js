@@ -18,7 +18,7 @@ while (arg = rawArgs.shift()) {
         else if (rawArgs[0] && !/-/.test(rawArgs[0]))
             options[arg] = rawArgs.shift();
         else
-            options[arg] = true;
+            options[arg] = null;
     }
     else if (/-/.test(arg)) {
         arg = arg.slice(1).split('');
@@ -27,7 +27,7 @@ while (arg = rawArgs.shift()) {
             if (rawArgs[0] && !/-/.test(rawArgs[0]))
                 flags[arg[i]] = rawArgs.shift();
             else
-                flags[arg[i]] = true;
+                flags[arg[i]] = null;
         }
     }
     else {
@@ -68,11 +68,11 @@ function runFlags(scriptObj, args, flags, options) {
         // run the flag/option execs
         .then(function () {
             var flagExecs = _.filter(obj.flags, function (flag, flagName) {
-                return !!flag.exec && flags[flagName];
+                return !!flag.exec && _.has(flags, flagName);
             });
 
             var optionExecs = _.filter(obj.options, function (option, optionName) {
-                return !!option.exec && options[optionName];
+                return !!option.exec && _.has(options, optionName);
             });
 
             return P.each(_.map(flagExecs, function (flag) {

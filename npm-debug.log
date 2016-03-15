@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.10.0
+3 info using node@v0.12.2
+4 verbose node symlink /usr/local/bin/node
+5 verbose publish [ '.' ]
+6 silly cache add args [ '.', null ]
+7 verbose cache add spec .
+8 silly cache add parsed spec { raw: '.',
+8 silly cache add   scope: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: '.',
+8 silly cache add   spec: '/Users/fellmanj/projects/woodshop/fun_with_flags',
+8 silly cache add   type: 'directory' }
+9 verbose addLocalDirectory /Users/fellmanj/.npm/fun_with_flags/1.0.1/package.tgz not in flight; packing
+10 verbose tar pack [ '/Users/fellmanj/.npm/fun_with_flags/1.0.1/package.tgz',
+10 verbose tar pack   '/Users/fellmanj/projects/woodshop/fun_with_flags' ]
+11 verbose tarball /Users/fellmanj/.npm/fun_with_flags/1.0.1/package.tgz
+12 verbose folder /Users/fellmanj/projects/woodshop/fun_with_flags
+13 info prepublish fun_with_flags@1.0.1
+14 verbose addLocalTarball adding from inside cache /Users/fellmanj/.npm/fun_with_flags/1.0.1/package.tgz
+15 silly cache afterAdd fun_with_flags@1.0.1
+16 verbose afterAdd /Users/fellmanj/.npm/fun_with_flags/1.0.1/package/package.json not in flight; writing
+17 verbose afterAdd /Users/fellmanj/.npm/fun_with_flags/1.0.1/package/package.json written
+18 silly publish { author: { name: 'john fellman' },
+18 silly publish   bugs: { url: 'https://github.com/gkchestertron/fun_with_flags/issues' },
+18 silly publish   dependencies: { bluebird: '3.0.1', underscore: '1.8.3' },
+18 silly publish   description: 'cli tool framework',
+18 silly publish   homepage: 'https://github.com/gkchestertron/fun_with_flags#readme',
+18 silly publish   keywords: [ 'cli' ],
+18 silly publish   license: 'ISC',
+18 silly publish   main: 'fun-with-flags.js',
+18 silly publish   name: 'fun_with_flags',
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git+https://github.com/gkchestertron/fun_with_flags.git' },
+18 silly publish   version: '1.0.1',
+18 silly publish   readme: '#Fun With Flags\nFun With Flags is a simple cli framework for node using promises. It parses your args/flags/options and uses a simple definition object to build powerful cli tools very quickly.\n\n##Usage\nWrite a simple definition and pass it into the fwf factory.\n```javascript\n// example-cli.js\nvar Promise = require(\'bluebird\');\n\nrequire(\'fun_with_flags\')({\n    // define a top-level command\n    dothething: {\n        // add a description for the auto-usage message\n        description: \'<name> does the thing\',\n        display: function (result) {\n            console.log(\'The thing, \'+result.name+\', is done:\');\n            console.log(result.msg);\n        },\n        // exec will be called after the flags/opions have been parsed into the target\n        // should return a promise or result object\n        // will be passed any arguments given beyond the parent command\n        exec: function (target, name) {\n            var result = { msg: \'the thing was successful\' };\n            result.name = target.name = name;\n\n            if (!target.fast)\n                result.msg += \' - and it was not fast\';\n\n            return new Promise(function (resolve, reject) {\n                if (target.error)\n                    reject(\'the thing was not successful - \'+target.error);\n                else\n                    resolve(result);\n            });\n        },\n        flags: {\n            // each flag also gets a description and exec\n            f: {\n                description: \'does the thing fast\',\n                // flag execs are called after the command\'s exec and are passed the target and result\n                exec: function (target, result) {\n                    result.msg += \' - and we did it fast\';\n                },\n                name: \'fast\'\n            }\n        },\n        options: {\n            error: {\n                description: \'make the cli throw an error\'\n            }\n        }\n    }\n});\n```\n\nIf you type the command:\n```\n$ node example-cli.js\n```\nYou will get an auto-generated message indicating how to use your new cli tool.\n\nNow try:\n\n```\n$ node example-cli.js dothething rightnow \n$ node example-cli.js dothething rightnow -f\n$ node example-cli.js dothething rightnow --error \'something bad happened\'\n```\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: 'bfb1316d86e7618aeb40133037aa912025eec2ea',
+18 silly publish   _id: 'fun_with_flags@1.0.1',
+18 silly publish   scripts: {},
+18 silly publish   _shasum: '2013d5b449196766c57858068e04f2f53ef1068f',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name fun_with_flags
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/fun_with_flags
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/fellmanj/.npm/fun_with_flags/1.0.1/package.tgz
+26 verbose request uri https://registry.npmjs.org/fun_with_flags
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 15:46:58
+29 verbose request using bearer token for auth
+30 verbose request id c831c89e3cad480a
+31 http request PUT https://registry.npmjs.org/fun_with_flags
+32 http 403 https://registry.npmjs.org/fun_with_flags
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=300',
+33 verbose headers   'content-length': '95',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Tue, 15 Mar 2016 22:46:59 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-ord1721-ORD',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1458082018.937379,VS0,VE837' }
+34 verbose request invalidating /Users/fellmanj/.npm/registry.npmjs.org/fun_with_flags on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 1.0.1." : fun_with_flags
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:247:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:368:22)
+36 verbose stack     at Request.emit (events.js:110:17)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1219:14)
+36 verbose stack     at Request.emit (events.js:129:20)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1167:12)
+36 verbose stack     at IncomingMessage.emit (events.js:129:20)
+36 verbose stack     at _stream_readable.js:908:16
+36 verbose stack     at process._tickCallback (node.js:355:11)
+37 verbose statusCode 403
+38 verbose pkgid fun_with_flags
+39 verbose cwd /Users/fellmanj/projects/woodshop/fun_with_flags
+40 error Darwin 14.4.0
+41 error argv "node" "/usr/local/bin/npm" "publish"
+42 error node v0.12.2
+43 error npm  v2.10.0
+44 error code E403
+45 error "You cannot publish over the previously published version 1.0.1." : fun_with_flags
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
