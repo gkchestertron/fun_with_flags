@@ -15,7 +15,6 @@
     "license": "ISC",
     "main": "fun-with-flags.js",
     "name": "fun_with_flags",
-    "private": true,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/north-bay/fun_with_flags.git"
