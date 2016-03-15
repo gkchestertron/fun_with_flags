@@ -3,11 +3,11 @@ Fun With Flags is a simple cli framework for node using promises. It parses your
 
 ##Usage
 Write a simple definition and pass it into the fwf factory.
-```
+```javascript
 // example-cli.js
 var Promise = require('bluebird');
 
-require('./fun-with-flags')({
+require('fun-with-flags')({
     // define a top-level command
     dothething: {
         // add a description for the auto-usage message
@@ -55,6 +55,6 @@ require('./fun-with-flags')({
 
 If you type the command:
 ```
-$ node example-cli.js dothething
+$ node example-cli.js
 ```
 You will get an auto-generated message indicating how to use your new cli tool.
