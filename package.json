@@ -1,0 +1,24 @@
+{
+    "author": "john fellman",
+    "bugs": {
+        "url": "https://github.com/north-bay/fun_with_flags/issues"
+    },
+    "dependencies": {
+        "bluebird": "3.0.1",
+        "underscore": "1.8.3"
+    },
+    "description": "cli tool framework",
+    "homepage": "https://github.com/north-bay/fun_with_flags#readme",
+    "keywords": [
+        "cli"
+    ],
+    "license": "ISC",
+    "main": "fun-with-flags.js",
+    "name": "fun_with_flags",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/north-bay/fun_with_flags.git"
+    },
+    "version": "1.0.0"
+}
