@@ -15,7 +15,7 @@ while (arg = rawArgs.shift()) {
 
         if (/=/.test(arg))
             options[arg.split('=')[0]] = arg.split('=')[1];
-        else if (rawArgs[0] && !/-/.test(rawArgs[0]))
+        else if (rawArgs[0] && !/^-/.test(rawArgs[0]))
             options[arg] = rawArgs.shift();
         else
             options[arg] = null;
@@ -24,7 +24,7 @@ while (arg = rawArgs.shift()) {
         arg = arg.slice(1).split('');
 
         for (var i in arg) {
-            if (rawArgs[0] && !/-/.test(rawArgs[0]))
+            if (rawArgs[0] && !/^-/.test(rawArgs[0]))
                 flags[arg[i]] = rawArgs.shift();
             else
                 flags[arg[i]] = null;
