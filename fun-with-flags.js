@@ -10,7 +10,7 @@ var option;
 var flag;
 
 while (arg = rawArgs.shift()) {
-    if (/--/.test(arg)) {
+    if (/^--/.test(arg)) {
         arg = arg.slice(2);
 
         if (/=/.test(arg))
@@ -20,7 +20,7 @@ while (arg = rawArgs.shift()) {
         else
             options[arg] = null;
     }
-    else if (/-/.test(arg)) {
+    else if (/^-/.test(arg)) {
         arg = arg.slice(1).split('');
 
         for (var i in arg) {
