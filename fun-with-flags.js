@@ -143,12 +143,10 @@ function defaultLog(result) {
 
     function helper(obj) {
         _.each(obj, function (prop, propName) {
-            if (typeof(prop) === 'object') {
-                console.log(propName,':');
-                defaultLog(prop);
-            }
-            else
-                console.log(prop, ':', prop);
+            if (typeof(prop) === 'object')
+                prop = JSON.stringify(prop);
+
+            console.log(prop, ':', prop);
         });
     }
 }
