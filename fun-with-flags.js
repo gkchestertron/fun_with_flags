@@ -146,7 +146,7 @@ function defaultLog(result) {
             if (typeof(prop) === 'object')
                 prop = JSON.stringify(prop);
 
-            console.log(prop, ':', prop);
+            console.log(propName, ':', prop);
         });
     }
 }
