@@ -91,7 +91,7 @@ function runFlags(scriptObj, args, flags, options) {
             if (obj.display)
                 obj.display(result)
             else
-                console.log(result);
+                defaultLog(result);
         })
         // catch errors
         .catch(log)
@@ -133,6 +133,24 @@ function displayHelp(scriptObj, i) {
     });
 
     return message;
+}
+
+function defaultLog(result) {
+    if (Array.isArray(result))
+        _.each(result, function (obj) { helper(obj); });
+    else
+        helper(result);
+
+    function helper(obj) {
+        _.each(obj, function (prop, propName) {
+            if (typeof(prop) === 'object') {
+                console.log(propName,':');
+                defaultLog(prop);
+            }
+            else
+                console.log(prop, ':', prop);
+        });
+    }
 }
 
 module.exports = function (scriptObj) {
