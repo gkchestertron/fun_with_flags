@@ -52,12 +52,16 @@ function runFlags(scriptObj, args, flags, options) {
             var name = flag.name || flagName;
             if (flags[flagName])
                 target[name] = flags[flagName];
+            else
+                target[name] = undefined;
         });
         // add the options to the target
         _.each(obj.options, function (option, optionName) {
             var name = option.name || optionName;
             if (options[optionName])
                 target[name] = options[optionName];
+            else
+                target[name] = undefined;
         });
         // run the command's exec function
         obj.exec.apply(obj, args)
