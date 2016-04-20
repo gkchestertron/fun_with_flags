@@ -129,6 +129,16 @@ function displayHelp(scriptObj, i) {
                 message += '\n'+spaces+'    --'+optionName+' : '+option.description;
             });
             message+='\n';
+
+            // if we have a sub-command
+            _.each(val, function (subCommand, name) {
+                var subObj = {};
+
+                subObj[name] = subCommand;
+
+                if (subCommand.description)
+                    message += spaces+displayHelp(subObj, i + 4);
+            });
         }
         else if (typeof val === 'object')
             message += ':'+spaces+displayHelp(val, i + 4);
