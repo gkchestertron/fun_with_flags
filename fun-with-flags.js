@@ -123,11 +123,11 @@ function displayHelp(scriptObj, i) {
         if (typeof(val) === 'object' && val.description) {
             message += ': '+val.description;
             _.each(val.flags, function (flag, flagName) {
-                var description = flag.description.split('\n').join('\n'+spaces);
+                var description = flag.description.split('\n').join('\n    '+spaces);
                 message += '\n'+spaces+'    -'+flagName+' : '+description;
             });
             _.each(val.options, function (option, optionName) {
-                var description = option.description.split('\n').join('\n'+spaces);
+                var description = option.description.split('\n').join('\n    '+spaces);
                 message += '\n'+spaces+'    --'+optionName+' : '+description;
             });
             message+='\n';
