@@ -16,7 +16,7 @@ while (arg = rawArgs.shift()) {
         if (/=/.test(arg))
             options[arg.split('=')[0]] = arg.split('=')[1];
         else if (rawArgs[0] && !/^-/.test(rawArgs[0]))
-            options[arg] = rawArgs.shift();
+            options[arg] = parseArg(rawArgs.shift());
         else
             options[arg] = null;
     }
@@ -25,7 +25,7 @@ while (arg = rawArgs.shift()) {
 
         for (var i in arg) {
             if (rawArgs[0] && !/^-/.test(rawArgs[0]))
-                flags[arg[i]] = rawArgs.shift();
+                flags[arg[i]] = parseArg(rawArgs.shift());
             else
                 flags[arg[i]] = null;
         }
@@ -33,6 +33,16 @@ while (arg = rawArgs.shift()) {
     else {
         args.push(arg);
     }
+}
+
+function parseArg(arg) {
+    if (arg === 'true')
+        return true;
+    if (arg === 'false')
+        return false;
+    if (arg === 'null')
+        return null;
+    return arg;
 }
 
 function runFlags(scriptObj, args, flags, options) {
