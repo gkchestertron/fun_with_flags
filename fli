@@ -1,10 +1,8 @@
 #!/bin/bash
 clear
-echo `dirname $0`
-echo `pwd`
-# if [[ $@ == **-l** ]]
-# then
-# 	node "`dirname $0`"/fli "$@" | less -R
-# else
-# 	node "`dirname $0`"/fli "$@"
-# fi
+if [[ $@ == **-l** ]]
+then
+	node "`pwd`"/fli "$@" | less -R
+else
+	node "`pwd`"/fli "$@"
+fi
