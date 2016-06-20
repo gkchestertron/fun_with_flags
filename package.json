@@ -1,5 +1,8 @@
 {
     "author": "john fellman",
+    "bin": {
+        "fli": "./fli"
+    },
     "bugs": {
         "url": "https://github.com/gkchestertron/fun_with_flags/issues"
     },
@@ -19,5 +22,5 @@
         "type": "git",
         "url": "git+https://github.com/gkchestertron/fun_with_flags.git"
     },
-    "version": "1.1.5"
+    "version": "1.1.6"
 }
