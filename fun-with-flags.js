@@ -49,15 +49,17 @@ function runFlags(scriptObj, args, flags, options) {
     var obj       = scriptObj,
         target = {},
         result = {},
-        parentFlags = {};
+        parentFlags = scriptObj.flags     || {},
+        parentOptions = scriptObj.options || {};
 
 
     while (obj[args[0]]) {
         obj = obj[args.shift()];
-        parentFlags = _.extend({}, (obj.flags || {}), parentFlags);
+        obj.flags   = obj.flags   || {};
+        obj.options = obj.options || {};
+        parentFlags   = _.extend(obj.flags, parentFlags);
+        parentOptions = _.extend(obj.options, parentOptions);
     }
-
-    obj.flags = parentFlags;
 
     args.unshift(target);
 
