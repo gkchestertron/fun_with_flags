@@ -78,13 +78,7 @@ function runFlags(scriptObj, args, flags, options) {
             if (_.has(options, optionName))
                 target[name] = options[optionName];
         });
-        // run the command's exec function
-        obj.exec.apply(obj, args)
-        // set the result
-        .then(function (objResult) {
-            result = objResult;
-        })
-        // run the flag/option execs
+        // run the exec function for each flag and option
         .then(function () {
             var flagExecs = _.filter(obj.flags, function (flag, flagName) {
                 return !!flag.exec && _.has(flags, flagName);
@@ -97,10 +91,37 @@ function runFlags(scriptObj, args, flags, options) {
             return P.each(_.map(flagExecs, function (flag) {
                 return flag.exec;
             }), function (flagExec) {
-                return flagExec.call(obj, target, result);
+                return flagExec.call(obj, target);
             })
             .then(P.each(_.map(optionExecs, function (option) {
                 return option.exec;
+            }), function (optionExec) {
+                return optionExec.call(obj, target);
+            }))
+        })
+        // run the command's exec function
+        obj.exec.apply(obj, args)
+        // set the result
+        .then(function (objResult) {
+            result = objResult;
+        })
+        // run the flag/option execs
+        .then(function () {
+            var flagExecs = _.filter(obj.flags, function (flag, flagName) {
+                return !!flag.postExec && _.has(flags, flagName);
+            });
+
+            var optionExecs = _.filter(obj.options, function (option, optionName) {
+                return !!option.postExec && _.has(options, optionName);
+            });
+
+            return P.each(_.map(flagExecs, function (flag) {
+                return flag.postExec;
+            }), function (flagExec) {
+                return flagExec.call(obj, target, result);
+            })
+            .then(P.each(_.map(optionExecs, function (option) {
+                return option.postExec;
             }), function (optionExec) {
                 return optionExec.call(obj, target, result);
             }))
