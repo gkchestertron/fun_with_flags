@@ -148,7 +148,7 @@ function runFlags(scriptObj, args, flags, options) {
         .then(process.exit);
     }
     else
-        console.log(displayHelp(scriptObj));
+        console.log(displayHelp(obj));
 }
 
 function displayHelp(scriptObj, i) {
