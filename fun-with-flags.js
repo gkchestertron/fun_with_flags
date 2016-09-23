@@ -102,7 +102,9 @@ function runFlags(scriptObj, args, flags, options) {
         }))
 
         // run the command's exec function
-        .then(obj.exec.apply(obj, args))
+        .then(function () {
+          return obj.exec.apply(obj, args);
+        })
 
         // set the result
         .then(function (objResult) {
