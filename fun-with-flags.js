@@ -71,6 +71,7 @@ function runFlags(scriptObj, args, flags, options) {
             if (_.has(flags, flagName))
                 target[name] = flags[flagName];
         });
+
         // add the options to the target
         _.each(obj.options, function (option, optionName) {
             var name = option.name || optionName;
@@ -78,34 +79,37 @@ function runFlags(scriptObj, args, flags, options) {
             if (_.has(options, optionName))
                 target[name] = options[optionName];
         });
-        // run the exec function for each flag and option
-        .then(function () {
-            var flagExecs = _.filter(obj.flags, function (flag, flagName) {
-                return !!flag.exec && _.has(flags, flagName);
-            });
 
-            var optionExecs = _.filter(obj.options, function (option, optionName) {
-                return !!option.exec && _.has(options, optionName);
-            });
+        // run the exec function for each flag
+        var flagExecs = _.filter(obj.flags, function (flag, flagName) {
+            return !!flag.exec && _.has(flags, flagName);
+        });
 
-            return P.each(_.map(flagExecs, function (flag) {
-                return flag.exec;
-            }), function (flagExec) {
-                return flagExec.call(obj, target);
-            })
-            .then(P.each(_.map(optionExecs, function (option) {
-                return option.exec;
-            }), function (optionExec) {
-                return optionExec.call(obj, target);
-            }))
+        // run the exec function for each option
+        var optionExecs = _.filter(obj.options, function (option, optionName) {
+            return !!option.exec && _.has(options, optionName);
+        });
+
+        P.each(_.map(flagExecs, function (flag) {
+            return flag.exec;
+        }), function (flagExec) {
+            return flagExec.call(obj, target);
         })
+        .then(P.each(_.map(optionExecs, function (option) {
+            return option.exec;
+        }), function (optionExec) {
+            return optionExec.call(obj, target);
+        }))
+
         // run the command's exec function
-        obj.exec.apply(obj, args)
+        .then(obj.exec.apply(obj, args))
+
         // set the result
         .then(function (objResult) {
             result = objResult;
         })
-        // run the flag/option execs
+
+        // run the flag/option postExecs
         .then(function () {
             var flagExecs = _.filter(obj.flags, function (flag, flagName) {
                 return !!flag.postExec && _.has(flags, flagName);
@@ -126,6 +130,7 @@ function runFlags(scriptObj, args, flags, options) {
                 return optionExec.call(obj, target, result);
             }))
         })
+
         // run the display method on the result
         .then(function () {
             if (obj.display)
@@ -133,8 +138,10 @@ function runFlags(scriptObj, args, flags, options) {
             else
                 console.log(result);
         })
+
         // catch errors
         .catch(log)
+
         // exit
         .then(process.exit);
     }
