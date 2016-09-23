@@ -1,0 +1,16 @@
+_fli() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    if [ "$prev" = "fli" ]; then
+      opts="$(grep $cur $(pwd)/.fun_with_flags_autocomplete)";
+      COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+    else
+      opts="$(grep $prev $(pwd)/.fun_with_flags_autocomplete | sed s/"^.*$prev"//g)";
+      COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+    fi
+		return 0
+}
+complete -F _fli fli

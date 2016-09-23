@@ -1,5 +1,6 @@
 var _       = require('underscore');
 var P       = require('bluebird');
+var fs      = require('fs');
 var rawArgs = process.argv.slice(2);
 var log     = console.log.bind(console);
 var args    = [];
@@ -8,6 +9,7 @@ var options = {};
 var arg;
 var option;
 var flag;
+
 
 while (arg = rawArgs.shift()) {
     if (/^--/.test(arg)) {
@@ -46,11 +48,12 @@ function parseArg(arg) {
 }
 
 function runFlags(scriptObj, args, flags, options) {
-    var obj       = scriptObj,
+    var obj    = scriptObj,
         target = {},
         result = {},
-        parentFlags = scriptObj.flags     || {},
-        parentOptions = scriptObj.options || {};
+        parentFlags   = scriptObj.flags   || {},
+        parentOptions = scriptObj.options || {},
+        firstArg = args[0];
 
 
     while (obj[args[0]]) {
@@ -196,6 +199,25 @@ function displayHelp(scriptObj, i) {
     return message;
 }
 
+function autoComplete(scriptObj, lines, path) {
+  lines = lines || [];
+  path  = path  || '';
+
+  _.each(scriptObj, function (obj, name) {
+    if (/flags|options|exec|description|display/.test(name))
+      return;
+
+    if (typeof(obj) === 'object') {
+        lines.push(path+' '+name);
+        if (!obj.exec)
+          autoComplete(obj, lines, name);
+    }
+  });
+
+  return lines;
+}
+
 module.exports = function (scriptObj) {
+    fs.writeFile('.fun_with_flags_autocomplete', autoComplete(scriptObj).join('\n'));
     runFlags(scriptObj, args, flags, options);
 };
