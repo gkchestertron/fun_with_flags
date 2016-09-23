@@ -38,9 +38,9 @@ while (arg = rawArgs.shift()) {
 function parseArg(arg) {
     if (arg === 'true')
         return true;
-    if (arg === 'false')
+    else if (arg === 'false')
         return false;
-    if (arg === 'null')
+    else if (arg === 'null')
         return null;
     return arg;
 }
@@ -48,11 +48,16 @@ function parseArg(arg) {
 function runFlags(scriptObj, args, flags, options) {
     var obj       = scriptObj,
         target = {},
-        result = {};
+        result = {},
+        parentFlags = {};
 
 
-    while (obj[args[0]])
+    while (obj[args[0]]) {
         obj = obj[args.shift()];
+        parentFlags = _.extend({}, (obj.flags || {}), parentFlags);
+    }
+
+    obj.flags = parentFlags;
 
     args.unshift(target);
 
