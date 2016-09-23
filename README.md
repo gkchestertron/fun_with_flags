@@ -1,3 +1,6 @@
+#note:
+This readme is entirely out of date. Not really sure how bad. Will update in next version. Basically you can now install globally and "fli" will try and run a js file or folder named "fli" in your current directory.
+
 #Fun With Flags
 Fun With Flags is a simple cli framework for node using promises. It parses your args/flags/options and uses a simple definition object to build powerful cli tools very quickly.
 
