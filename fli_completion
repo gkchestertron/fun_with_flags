@@ -13,7 +13,6 @@ _fli()
       COMPREPLY=( $(compgen -W "${opts}" ${cur}) );
     else
       opts=$(grep $prev $(pwd)/.fun_with_flags_autocomplete | awk -v prev="$prev" '{for(i=1;i<=NF;i++) if ($i==prev) print $(i+1)}');
-      echo "$opts" >> text.txt
       COMPREPLY=( $(compgen -W "${opts}" ${cur}) );
     fi
 		return 0
