@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
 
-require('./fun-with-flags')({
+require('../fun-with-flags')({
     // define a top-level command
     dothething: {
         // add a description for the auto-usage message
