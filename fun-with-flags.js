@@ -208,9 +208,17 @@ function autoComplete(scriptObj, lines, path) {
       return;
 
     if (typeof(obj) === 'object') {
+      if (path)
         lines.push(path+' '+name);
-        if (!obj.exec)
+      else
+        lines.push(name);
+
+      if (!obj.exec) {
+        if (path)
+          autoComplete(obj, lines, path+' '+name);
+        else
           autoComplete(obj, lines, name);
+      }
     }
   });
 

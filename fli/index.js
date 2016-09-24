@@ -20,7 +20,7 @@ require('./fun-with-flags')({
                 result.msg += ' - and it was not fast';
 
             return new Promise(function (resolve, reject) {
-                if (target.error)
+                if (target.error !== undefined)
                     reject('the thing was not successful - '+target.error);
                 else
                     resolve(result);
@@ -31,7 +31,7 @@ require('./fun-with-flags')({
             f: {
                 description: 'does the thing fast',
                 // flag execs are called after the command's exec and are passed the target and result
-                exec: function (target, result) {
+                postExec: function (target, result) {
                     result.msg += ' - and we did it fast';
                 },
                 name: 'fast'
