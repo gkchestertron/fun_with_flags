@@ -219,11 +219,12 @@ function autoComplete(scriptObj, lines, path) {
         else
           autoComplete(obj, lines, name);
       }
-      else if (obj.completion) {
+
+      if (obj.completion) {
         autoComplete(obj.completion, lines, path+' '+name);
       }
     }
-    else if (typeof(obj) === 'string') {
+    if (typeof(obj) === 'string') {
       lines.push(path+' '+obj);
     }
   });
