@@ -204,7 +204,7 @@ function autoComplete(scriptObj, lines, path) {
   path  = path  || '';
 
   _.each(scriptObj, function (obj, name) {
-    if (/flags|options|exec|description|display/.test(name))
+    if (/^(flags|options|exec|description|display)$/.test(name))
       return;
 
     if (typeof(obj) === 'object') {
@@ -219,6 +219,12 @@ function autoComplete(scriptObj, lines, path) {
         else
           autoComplete(obj, lines, name);
       }
+      else if (obj.completion) {
+        autoComplete(obj.completion, lines, path+' '+name);
+      }
+    }
+    else if (typeof(obj) === 'string') {
+      lines.push(path+' '+obj);
     }
   });
 

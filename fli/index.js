@@ -3,6 +3,7 @@ var Promise = require('bluebird');
 require('../fun-with-flags')({
     // define a top-level command
     dothething: {
+        completion: ['demo', 'montgomery'],
         // add a description for the auto-usage message
         description: '<name> does the thing',
         display: function (result) {
