@@ -124,16 +124,14 @@ function runFlags(scriptObj, args, flags, options) {
                 return !!option.postExec && _.has(options, optionName);
             });
 
-            return P.each(_.map(flagExecs, function (flag) {
-                return flag.postExec;
-            }), function (flagExec) {
-                return flagExec.call(obj, target, result);
-            })
-            .then(P.each(_.map(optionExecs, function (option) {
-                return option.postExec;
-            }), function (optionExec) {
-                return optionExec.call(obj, target, result);
+            return P.all(_.map(flagExecs, function (flag) {
+                return flag.postExec.call(obj, target, result);
             }))
+            .then(function () {
+              return P.all(_.map(optionExecs, function (option) {
+                return option.postExec.call(obj, target, result);
+              }))
+            });
         })
 
         // run the display method on the result
