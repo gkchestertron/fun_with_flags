@@ -139,7 +139,7 @@ function runFlags(scriptObj, args, flags, options) {
         // run the display method on the result
         .then(function () {
             if (obj.display)
-                obj.display(result)
+                console.log(obj.display(result));
             else
                 console.log(result);
         })
