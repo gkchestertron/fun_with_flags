@@ -1,47 +1,37 @@
-var Promise = require('bluebird');
+var fwf = require('../fun-with-flags'),
+    Promise = require('bluebird');
 
-require('../fun-with-flags')({
-    // define a top-level command
-    dothething: {
-        completion: ['demo', 'montgomery'],
-        // add a description for the auto-usage message
-        description: '<name> does the thing',
-        display: function (result) {
-            console.log('The thing, '+result.name+', is done:');
-            console.log(result.msg);
-        },
-        // exec will be called after the flags/opions have been parsed into the target
-        // should return a promise or result object
-        // will be passed any arguments given beyond the parent command
-        exec: function (target, name) {
-            var result = { msg: 'the thing was successful' };
-            result.name = target.name = name;
+fwf.create({
+  login: {
+    description: 'prompts for username and password',
 
-            if (!target.fast)
-                result.msg += ' - and it was not fast';
+    display: function (result) {
+      return fwf.style.select((target.username)) + ' ' + fwf.style.highlight('is totally logged in');
+    },
 
-            return new Promise(function (resolve, reject) {
-                if (target.error !== undefined)
-                    reject('the thing was not successful - '+target.error);
-                else
-                    resolve(result);
-            });
-        },
-        flags: {
-            // each flag also gets a description and exec
-            f: {
-                description: 'does the thing fast',
-                // flag execs are called after the command's exec and are passed the target and result
-                postExec: function (target, result) {
-                    result.msg += ' - and we did it fast';
-                },
-                name: 'fast'
-            }
-        },
-        options: {
-            error: {
-                description: 'make the cli throw an error'
-            }
-        }
+    exec: function (target) {
+      return fwf.prompt(['username', 'password'])
+      .then(function (result) {
+        target.username = result.username;
+        console.log(fwf.style.info('logging in...'));
+        return Promise.delay(1000, target);
+      });
     }
+  },
+
+  curl: {
+    description: '<url> calls shell to run curl on a url',
+
+    display: function (result) {
+      if (result.error)
+        return fwf.style.error('command exited with a code of: '+result.exitCode);
+      else
+        return 'command exited with a code of: '+result.exitCode;
+    },
+
+    exec: function (target, url) {
+      return fwf.shell('curl', [url]);
+      // return fwf.shell(true, 'ls');
+    }
+  }
 });
