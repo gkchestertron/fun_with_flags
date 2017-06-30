@@ -57,6 +57,9 @@ function runFlags(scriptObj, args, flags, options) {
 
 
     while (obj[args[0]]) {
+        // allways give help if -h is passed
+        if (args.length === 1 && obj[args[0]].exec && flags.h !== undefined)
+          break;
         obj = obj[args.shift()];
         obj.flags   = obj.flags   || {};
         obj.options = obj.options || {};

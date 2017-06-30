@@ -31,7 +31,6 @@ fwf.create({
 
     exec: function (target, url) {
       return fwf.shell('curl', [url]);
-      // return fwf.shell(true, 'ls');
     }
   }
 });
