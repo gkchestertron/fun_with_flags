@@ -1,4 +1,4 @@
-var fwf = require('../fun-with-flags'),
+var fwf     = require('../fun-with-flags'),
     Promise = require('bluebird');
 
 fwf.create({
@@ -6,7 +6,7 @@ fwf.create({
     description: 'prompts for username and password',
 
     display: function (result) {
-      return fwf.style.select((target.username)) + ' ' + fwf.style.highlight('is totally logged in');
+      return fwf.style.select((result.username)) + ' ' + fwf.style.highlight('is totally logged in');
     },
 
     exec: function (target) {
@@ -24,9 +24,9 @@ fwf.create({
 
     display: function (result) {
       if (result.error)
-        return fwf.style.error('command exited with a code of: '+result.exitCode);
+        return fwf.style.error('command exited with a code of: ' + result.exitCode);
       else
-        return 'command exited with a code of: '+result.exitCode;
+        return 'command exited with a code of: ' + result.exitCode;
     },
 
     exec: function (target, url) {

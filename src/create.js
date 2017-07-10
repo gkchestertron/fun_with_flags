@@ -2,7 +2,6 @@ var _       = require('underscore');
 var P       = require('bluebird');
 var fs      = require('fs');
 var rawArgs = process.argv.slice(2);
-var log     = console.log.bind(console);
 var args    = [];
 var flags   = {};
 var options = {};
@@ -146,7 +145,9 @@ function runFlags(scriptObj, args, flags, options) {
         })
 
         // catch errors
-        .catch(log)
+        .catch(function (err) {
+          console.error(err.split('\n').join('\\'));
+        })
 
         // exit
         .then(process.exit);
