@@ -1,4 +1,8 @@
 # Fun With Flags!
+[![Build Status](https://travis-ci.org/gkchestertron/fun_with_flags.svg?branch=master)](https://travis-ci.org/gkchestertron/fun_with_flags)
+[![npm](https://img.shields.io/npm/dt/fun_with_flags.svg)]()
+[![npm](https://img.shields.io/npm/v/fun_with_flags.svg)]()
+
 Fun with flags is a node framework for building cli tools. Powerful cli tools can be built with simple definitions and promises. The framework can be installed globally for ease of use, and autocompletion for the tools you build is generated automatically and made available through the fli\_completion script included with this package.
 
 ## Installation
