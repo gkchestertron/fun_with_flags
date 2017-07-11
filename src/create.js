@@ -235,6 +235,9 @@ function autoComplete(scriptObj, lines, path) {
 }
 
 module.exports = function (scriptObj) {
-    fs.writeFile('.fun_with_flags_autocomplete', autoComplete(scriptObj).join('\n'));
+    fs.writeFile('.fun_with_flags_autocomplete', autoComplete(scriptObj).join('\n'), function (err) {
+      if (err)
+        console.error(err);
+    });
     runFlags(scriptObj, args, flags, options);
 };
