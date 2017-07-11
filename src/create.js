@@ -146,7 +146,7 @@ function runFlags(scriptObj, args, flags, options) {
 
         // catch errors
         .catch(function (err) {
-          console.error(err.split('\n').join('\\'));
+          console.error((err && err.split && err.split('\n').join('\\')) || err);
         })
 
         // exit
