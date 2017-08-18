@@ -7,7 +7,7 @@ module.exports = function (prompts) {
     prompt.message = '';
 
     prompt.get(prompts, function (err, result) {
-      prompt.stop();
+      prompt.pause();
       if (err)
         reject(err)
       else
