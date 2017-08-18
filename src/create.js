@@ -146,7 +146,7 @@ function runFlags(scriptObj, args, flags, options) {
 
         // catch errors
         .catch(function (err) {
-          console.error(err.split('\n').join('\\'));
+          console.error(err);
         })
 
         // exit
@@ -235,6 +235,9 @@ function autoComplete(scriptObj, lines, path) {
 }
 
 module.exports = function (scriptObj) {
-    fs.writeFile('.fun_with_flags_autocomplete', autoComplete(scriptObj).join('\n'));
+    fs.writeFile('.fun_with_flags_autocomplete', autoComplete(scriptObj).join('\n'), err => {
+      if (err)
+        console.error(err)
+    });
     runFlags(scriptObj, args, flags, options);
 };

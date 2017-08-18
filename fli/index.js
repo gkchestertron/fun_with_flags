@@ -30,7 +30,15 @@ fwf.create({
     },
 
     exec: function (target, url) {
-      return fwf.shell('curl', [url]);
+      return fwf.shell('curl ' + url);
+    }
+  },
+
+  multiCmd: {
+    description: '<str> <replace> <replacement> echos a string and replaces one word with another',
+
+    exec(target, str, replace, replacement) {
+      return fwf.shell('echo ' + str + " | sed 's/" + replace + '/' + replacement + "/'")
     }
   }
 });

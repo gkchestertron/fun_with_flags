@@ -29,6 +29,6 @@
     "mocha": "^3.4.2"
   },
   "scripts": {
-      "test": "./node_modules/.bin/mocha -u tdd --reporter spec"
+    "test": "./node_modules/.bin/mocha -u tdd --reporter spec"
   }
 }
