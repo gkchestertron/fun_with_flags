@@ -9,7 +9,6 @@ var arg;
 var option;
 var flag;
 
-
 while (arg = rawArgs.shift()) {
     if (/^--/.test(arg)) {
         arg = arg.slice(2);
@@ -127,11 +126,11 @@ function runFlags(scriptObj, args, flags, options) {
             });
 
             return P.all(_.map(flagExecs, function (flag) {
-                return flag.postExec.call(obj, target, result);
+                return result = flag.postExec.call(obj, target, result);
             }))
             .then(function () {
               return P.all(_.map(optionExecs, function (option) {
-                return option.postExec.call(obj, target, result);
+                return result = option.postExec.call(obj, target, result);
               }))
             });
         })
@@ -175,12 +174,12 @@ function displayHelp(scriptObj, i) {
         if (typeof(val) === 'object' && val.description) {
             message += ': '+val.description;
             _.each(val.flags, function (flag, flagName) {
-                var description = flag.description.split('\n').join('\n        '+spaces);
-                message += '\n'+spaces+'    -'+flagName+' : '+description;
+                var description = flag.description && flag.description.split('\n').join('\n        '+spaces) || '';
+                message += '\n'+spaces+'    -'+flagName+': '+description;
             });
             _.each(val.options, function (option, optionName) {
-                var description = option.description.split('\n').join('\n        '+spaces);
-                message += '\n'+spaces+'    --'+optionName+' : '+description;
+                var description = option.description && option.description.split('\n').join('\n        '+spaces) || '';
+                message += '\n'+spaces+'    --'+optionName+': '+description;
             });
             message+='\n';
 

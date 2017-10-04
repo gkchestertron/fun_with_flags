@@ -3,32 +3,63 @@
 [![npm](https://img.shields.io/npm/dt/fun_with_flags.svg)]()
 [![npm](https://img.shields.io/npm/v/fun_with_flags.svg)]()
 
-Fun with flags is a node framework for building cli tools. Powerful cli tools can be built with simple definitions and promises. The framework can be installed globally for ease of use, and autocompletion for the tools you build is generated automatically and made available through the fli\_completion script included with this package.
+Fun with flags is a node framework for building cli tools. Powerful cli tools can be built with simple definitions and promises. Documentation and autocompletion for the tools you build is generated automatically (see below for autocomplete setup).
 
 ## Installation
 Global installation is recommended:
 ```
 $ npm install -g fun_with_flags
 ```
-This may require sudo. You can also install it locally, and will have to write it with ./fli instead of the global fli command.
+This may require sudo. You can also install it locally, but you'll have to run the executable in your local npm_modules/fun_with_flags/bin folder.
 
 ## Usage
-Your cli tool should be be a node module in a folder named /fli/. It is built like so:
+Your cli tool should be be a node module in a folder named "fli" at the root of your project. It is built like so:
 ```
 require('fun_with_flags').create({ ... your definition object here ... });
 ```
-Your definition may be any number of levels deep and every object is a namespace. To run your cli tool just run fli from within the parent folder and pass the arguments, flags, and options:
+To run your tool, run the following in your project's parent folder
 ```
 $ fli command some_arg -f --later
 ```
+For your tool's documentation, run fli with no arguments:
+```
+$ fli
+```
+Or pass the -h flag:
+```
+$ fli command some arg -h
+```
+
+## Quickstart
+If you want to try it out, just clone this repo and run:
+```
+$ ./bin/\_fli
+```
+
+## Tool Definition
+Tools are defined with plain js objects, which may contain arbitrarily nested namespaces. To create executeable commands.
 
 ### Namespaces
 A namespace may and may have a description and any number of sub-namespaces or commands. If a namespace is passed an exec function it becomes a command. A namespace may also have flags and options which will be added to every command within its scope (i.e. you want an -e or --env flag/option for environment but don't want to write it a dozen times).
 ```
 // namespace
 {
-  namespace: {
-    description: 'this is a namespace description'
+  echo: {
+    description: 'this is a namespace for string manipluation and display commands',
+
+    exec(target, str) {
+      return str
+    },
+
+    reverse: {
+      descripton: 'migrate the database'
+      ...
+    },
+
+    truncate: {
+      description: 'seeds the database'
+      ...
+    }
   }
 }
 ```

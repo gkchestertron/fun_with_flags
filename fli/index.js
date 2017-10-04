@@ -1,44 +1,26 @@
-var fwf     = require('../fun-with-flags'),
-    Promise = require('bluebird');
+var fwf = require('../fun-with-flags');
 
 fwf.create({
-  login: {
-    description: 'prompts for username and password',
+  echo: {
+    description: '<...str> print a naked string (so long as it isn\'t a valid subcommand',
 
-    display: function (result) {
-      return fwf.style.select((result.username)) + ' ' + fwf.style.highlight('is totally logged in');
+    exec: (target, ...str) => str.join(' '),
+
+    replace: {
+      description: '<pattern> <replacement> <...str> replace by pattern within a naked string',
+
+      exec: (target, pattern, replacement, ...str) => 
+        str.join(' ').replace(pattern, replacement)
     },
 
-    exec: function (target) {
-      return fwf.prompt(['username', 'password'])
-      .then(function (result) {
-        target.username = result.username;
-        console.log(fwf.style.info('logging in...'));
-        return Promise.delay(1000, target);
-      });
-    }
-  },
+    flags: {
+      r: {
+        description: 'reverse output',
 
-  curl: {
-    description: '<url> calls shell to run curl on a url',
+        postExec: (target, result) => result.split('').reverse().join(''),
 
-    display: function (result) {
-      if (result.error)
-        return fwf.style.error('command exited with a code of: ' + result.exitCode);
-      else
-        return 'command exited with a code of: ' + result.exitCode;
-    },
-
-    exec: function (target, url) {
-      return fwf.shell('curl ' + url);
-    }
-  },
-
-  multiCmd: {
-    description: '<str> <replace> <replacement> echos a string and replaces one word with another',
-
-    exec(target, str, replace, replacement) {
-      return fwf.shell('echo ' + str + " | sed 's/" + replace + '/' + replacement + "/'")
+        takeArg: false
+      }
     }
   }
 });
