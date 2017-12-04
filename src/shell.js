@@ -3,6 +3,7 @@ const style        = require('./style')
 const fs           = require('fs')
 
 module.exports = function (cmd, args, opts) {
+  console.log(opts,'the opts')
   opts = opts || {};
 
   const tempFileName = Date.now() + '-fwf-cmd.sh'
@@ -12,7 +13,7 @@ module.exports = function (cmd, args, opts) {
       },
       returnResults  = opts.returnResults === false
         ? false
-        : true;
+        : true,
       writeToStdIn   = opts.writeToStdIn === false
         ? false
         : true;
@@ -57,7 +58,10 @@ module.exports = function (cmd, args, opts) {
       sp.on('close', function (code) {
         result.exitCode = code;
         if (returnResults)
-          resolve(result);
+          if (result.exitCode === 0)
+            resolve(result);
+          else
+            reject(result)
         else
           resolve('');
       });

@@ -1,3 +1,19 @@
 #!/bin/bash
-clear
-node "`pwd`"/fli "$@"
+
+# check for hidden folder first
+if [ -d "$(pwd)/.fli" ]
+then
+  node "`pwd`"/.fli "$@"
+
+# then unhidden (for backwards compatibility
+elif [ -d "$(pwd)/fli" ]
+then
+  node "`pwd`"/fli "$@"
+
+# otherwise don't try anything
+else
+  echo .fli folder not found
+fi
+
+# remove any generated scripts no matter what happens
+rm *-fwf-cmd.sh &>/dev/null
