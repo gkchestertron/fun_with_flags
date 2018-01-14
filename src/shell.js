@@ -3,10 +3,9 @@ const style        = require('./style')
 const fs           = require('fs')
 
 module.exports = function (cmd, args, opts) {
-  console.log(opts,'the opts')
   opts = opts || {};
 
-  const tempFileName = Date.now() + '-fwf-cmd.sh'
+  const tempFileName = Date.now() + '-' + Math.floor(Math.random() * 1000) + '-fwf-cmd.sh'
 
   var result = {
         allTheData: '',
@@ -32,8 +31,14 @@ module.exports = function (cmd, args, opts) {
     })
   })
   .then(() => {
-    fs.chmodSync(tempFileName, 0755);
-    return null
+    return new Promise((resolve, reject) => {
+      fs.chmod(tempFileName, 0755, err => {
+        if (err)
+          reject(err)
+        else
+          resolve()
+      })
+    })
   })
   .then(() => {
     return new Promise((resolve, reject) => {
@@ -80,5 +85,8 @@ module.exports = function (cmd, args, opts) {
           resolve(result)
       })
     })
+  })
+  .catch(err => {
+    console.error(err)
   })
 };
