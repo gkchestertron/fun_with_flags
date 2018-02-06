@@ -9,32 +9,54 @@ var arg;
 var option;
 var flag;
 
+// iterate through passed arguments, flags, and options
 while (arg = rawArgs.shift()) {
-    if (/^--/.test(arg)) {
-        arg = arg.slice(2);
 
-        if (/=/.test(arg))
-            options[arg.split('=')[0]] = arg.split('=')[1];
-        else if (rawArgs[0] && !/^-/.test(rawArgs[0]))
-            options[arg] = parseArg(rawArgs.shift());
-        else
-            options[arg] = null;
-    }
-    else if (/^-/.test(arg)) {
-        arg = arg.slice(1).split('');
+  // passed option with --option
+  if (/^--/.test(arg)) {
+    arg = arg.slice(2);
 
-        for (var i in arg) {
-            if (rawArgs[0] && !/^-/.test(rawArgs[0]))
-                flags[arg[i]] = parseArg(rawArgs.shift());
-            else
-                flags[arg[i]] = null;
-        }
+    // if we have = sign, set value
+    if (/=/.test(arg))
+      options[arg.split('=')[0]] = arg.split('=')[1];
+
+    // if we don't have equals but the next thing is not another flag 
+    // or option, set value
+    else if (rawArgs[0] && !/^-/.test(rawArgs[0]))
+      options[arg] = parseArg(rawArgs.shift());
+
+    // set to null to indicate flag was passes
+    else
+      options[arg] = null;
+  }
+
+  // passed flag with -f
+  else if (/^-/.test(arg)) {
+    arg = arg.slice(1).split(''); // get just the letters
+
+    // run through flags if multiple
+    for (var i in arg) {
+      // if the next thing is a value, set it to the flag
+      if (rawArgs[0] && !/^-/.test(rawArgs[0]))
+        flags[arg[i]] = parseArg(rawArgs.shift());
+
+      // set to null to indicate that the flag was passed
+      else
+        flags[arg[i]] = null;
     }
-    else {
-        args.push(arg);
-    }
+  }
+
+  // plain arg (not flag or option)
+  else {
+    args.push(arg);
+  }
 }
 
+/**
+ * parses an arg to convert booleans/null from strings to real values
+ * @param {string} arg - arg to parse
+ * @returns {mixed} - parsed arg
+ */
 function parseArg(arg) {
     if (arg === 'true')
         return true;
